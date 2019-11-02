@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -104,6 +106,16 @@ class Player implements UserInterface
      * @Assert\NotBlank(message="Please type a password")
      */
     private $is_coach;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="player_id", orphanRemoval=true)
+     */
+    private $matches;
+
+    public function __construct()
+    {
+        $this->matches = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -323,6 +335,37 @@ class Player implements UserInterface
     public function setIsCoach(?bool $is_coach): self
     {
         $this->is_coach = $is_coach;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Match[]
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Match $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches[] = $match;
+            $match->setPlayerId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Match $match): self
+    {
+        if ($this->matches->contains($match)) {
+            $this->matches->removeElement($match);
+            // set the owning side to null (unless already changed)
+            if ($match->getPlayerId() === $this) {
+                $match->setPlayerId(null);
+            }
+        }
 
         return $this;
     }

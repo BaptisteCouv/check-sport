@@ -44,7 +44,6 @@ class PlayerController extends FOSRestController
         //echo(json_encode($data));exit;
 
         $form->submit($data);
-
         
         if ($form->isValid()) {
             $hash = $encoder->encodePassword($player, $player->getPassword());

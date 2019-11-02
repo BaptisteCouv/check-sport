@@ -21,33 +21,18 @@ class Match
      * @ORM\ManyToOne(targetEntity="App\Entity\Team")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_team_host;
+    private $host_team;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Team")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_team_guest;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $winner;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $looser;
+    private $guest_team;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $datage;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $score;
 
     /**
      * @ORM\Column(type="integer")
@@ -69,79 +54,44 @@ class Match
      */
     private $information;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdTeamHost(): ?Team
+    public function getHostTeam(): ?Team
     {
-        return $this->id_team_host;
+        return $this->host_team;
     }
 
-    public function setIdTeamHost(?Team $id_team_host): self
+    public function setHostTeam(?Team $host_team): self
     {
-        $this->id_team_host = $id_team_host;
+        $this->host_team = $host_team;
 
         return $this;
     }
 
-    public function getIdTeamGuest(): ?Team
+    public function getGuestTeam(): ?Team
     {
-        return $this->id_team_guest;
+        return $this->guest_team;
     }
 
-    public function setIdTeamGuest(?Team $id_team_guest): self
+    public function setGuestTeam(?Team $guest_team): self
     {
-        $this->id_team_guest = $id_team_guest;
+        $this->guest_team = $guest_team;
 
         return $this;
     }
 
-    public function getWinner(): ?bool
-    {
-        return $this->winner;
-    }
-
-    public function setWinner(?bool $winner): self
-    {
-        $this->winner = $winner;
-
-        return $this;
-    }
-
-    public function getLooser(): ?bool
-    {
-        return $this->looser;
-    }
-
-    public function setLooser(?bool $looser): self
-    {
-        $this->looser = $looser;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
+    public function getDatage(): ?\DateTimeInterface
     {
         return $this->datage;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDatage(\DateTimeInterface $date): self
     {
         $this->datage = $date;
-
-        return $this;
-    }
-
-    public function getScore(): ?int
-    {
-        return $this->score;
-    }
-
-    public function setScore(?int $score): self
-    {
-        $this->score = $score;
 
         return $this;
     }
@@ -170,12 +120,12 @@ class Match
         return $this;
     }
 
-    public function getCancel(): ?bool
+    public function getCancelage(): ?bool
     {
         return $this->cancelage;
     }
 
-    public function setCancel(?bool $cancel): self
+    public function setCancelage(?bool $cancel): self
     {
         $this->cancelage = $cancel;
 
